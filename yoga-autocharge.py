@@ -26,6 +26,7 @@ import os.path
 START_CHARGE_THRESH = 65
 STOP_CHARGE_THRESH = 70
 FORCE_FULL_BATTERY = False # Set to True if you want to temporary charge your battery to full capacity. Set back to False when done.
+#FORCE_FULL_BATTERY = True
 
 # DO NOT CHANGE PAST THIS POINT
 conservation_mode_file = '/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
@@ -46,7 +47,7 @@ if ((battery.percent <= START_CHARGE_THRESH) or FORCE_FULL_BATTERY):
             f.write('0')
             f.close()
 
-if (battery.percent >= STOP_CHARGE_THRESH):
+elif (battery.percent >= STOP_CHARGE_THRESH):
     # We need to stop conservation mode
     if (os.path.isfile(conservation_mode_file)):
         f = open(conservation_mode_file, 'r')
